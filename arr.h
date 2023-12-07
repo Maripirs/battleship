@@ -1,6 +1,7 @@
 #ifndef ARR_H
 #define ARR_H
-
+#include <iostream>
+using namespace std;
 template <class T>
 class Arr {
     T* arr;
