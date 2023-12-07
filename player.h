@@ -26,7 +26,7 @@ class Player {
     Arr<Coor>& getGuessedCoors();
     Arr<Ship>& getShips();
 
-    virtual Coor chooseCoor() = 0;
+    virtual Coor& chooseCoor() = 0;
     Ship findHitShip();
     bool checLost();
 };
