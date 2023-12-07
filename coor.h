@@ -24,5 +24,6 @@ class Coor {
     char getCurrDisplay();
 
     bool operator==(const Coor&);
+    Coor& operator=(const Coor&);
 };
 #endif

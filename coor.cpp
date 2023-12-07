@@ -31,3 +31,10 @@ char Coor::getCurrDisplay() { return currDisplay; }
 bool Coor::operator==(const Coor& other) {
     return (y == other.y && x == other.x);
 }
+Coor& Coor::operator=(const Coor& rhs) {
+    x = rhs.x;
+    y = rhs.y;
+    isShip = rhs.isShip;
+    currDisplay = rhs.currDisplay;
+    return *this;
+}
