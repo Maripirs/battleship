@@ -5,7 +5,7 @@ Board::Board() {
     cols = 10;
     isHuman = false;
 }
-Board::Board(Arr<Arr<Coor>>& b, int r, int c, bool h) {
+Board::Board(Arr<Arr<Coor> >& b, int r, int c, bool h) {
     board = b;
     rows = r;
     cols = c;
@@ -18,13 +18,13 @@ Board::Board(const Board& rhs) {
     isHuman = rhs.isHuman;
 }
 
-void Board::setBoard(Arr<Arr<Coor>>& b) { board = b; }
+void Board::setBoard(Arr<Arr<Coor> >& b) { board = b; }
 void Board::setRows(int r) { rows = r; }
 void Board::setCols(int c) { cols = c; }
 
 void Board::setIsHuman(bool h) { isHuman = h; }
 
-Arr<Arr<Coor>>& Board::getBoard() { return board; }
+Arr<Arr<Coor> >& Board::getBoard() { return board; }
 int Board::getRows() { return rows; }
 int Board::getCols() { return cols; }
 

@@ -1,9 +1,9 @@
 #ifndef BOARD_H
 #define BOARD_H
-#include "Arr.h"  //Don't think we need it
-#include "Coor.h"
+#include "arr.h"  //Don't think we need it
+#include "coor.h"
 class Board {
-    Arr<Arr<Coor>> board;
+    Arr<Arr<Coor> > board;
     int rows;
     int cols;
 
@@ -11,16 +11,16 @@ class Board {
 
    public:
     Board();
-    Board(Arr<Arr<Coor>>&, int, int, bool);
+    Board(Arr<Arr<Coor> >&, int, int, bool);
     Board(const Board&);
 
-    void setBoard(Arr<Arr<Coor>>&);
+    void setBoard(Arr<Arr<Coor > >&);
     void setRows(int);
     void setCols(int);
 
     void setIsHuman(bool);
 
-    Arr<Arr<Coor>>& getBoard();
+    Arr<Arr<Coor> >& getBoard();
     int getRows();
     int getCols();
 

@@ -4,7 +4,7 @@ Ship::Ship() {
     name = "NONE";
     hits = 0;
 }
-Ship::Ship(int s, string n, int h, Arr<Coor> c) {
+Ship::Ship(int s, string n, int h, Arr<Coor>& c) {
     size = s;
     name = n;
     hits = h;

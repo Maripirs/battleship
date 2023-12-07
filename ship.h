@@ -10,7 +10,7 @@ class Ship {
 
    public:
     Ship();
-    Ship(int, string, int, Arr<Coor>);
+    Ship(int, string, int, Arr<Coor>&);
     Ship(const Ship&);
 
     int getSize();
