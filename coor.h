@@ -1,4 +1,28 @@
 #ifndef COOR_H
 #define COOR_H
-class Coor {};
+#include <iostream>
+using namespace std;
+class Coor {
+    int y;
+    int x;
+    bool isShip;
+    char currDisplay;
+
+   public:
+    Coor();
+    Coor(int, int, bool, char);
+    Coor(const Coor&);
+
+    void setX(int);
+    void setY(int);
+    void setIsShip(bool);
+    void setCurrDisplay(char);
+
+    int getX();
+    int getY();
+    bool getIsShip();
+    char getCurrDisplay();
+
+    bool operator==(const Coor&);
+};
 #endif
