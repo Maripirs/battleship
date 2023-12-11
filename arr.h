@@ -24,6 +24,7 @@ class Arr {
     void clearArr();
     ~Arr();
     Arr& operator=(const Arr&);
+    friend ostream& operator<<(ostream&, const Arr&);
 };
 #include "arr.cpp"
 #endif

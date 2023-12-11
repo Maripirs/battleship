@@ -3,29 +3,33 @@
 #include "arr.h"  //Don't think we need it
 #include "coor.h"
 class Board {
-    Arr<Arr<Coor> > board;
+    Arr<Coor> boardArr;
     int rows;
     int cols;
-
     bool isHuman;
 
    public:
     Board();
-    Board(Arr<Arr<Coor> >&, int, int, bool);
+    Board(Arr<Coor>&, int, int, bool);
     Board(const Board&);
 
-    void setBoard(Arr<Arr<Coor > >&);
+    void setBoardArr(Arr<Coor>&);
     void setRows(int);
     void setCols(int);
 
     void setIsHuman(bool);
 
-    Arr<Arr<Coor> >& getBoard();
+    Arr<Coor>& getBoardArr();
     int getRows();
     int getCols();
 
     bool getIsHuman();
 
-    void displayBoard();
+    friend ostream& operator<<(ostream&, Board&);
+
+    Board& operator=(const Board& rhs);
+    bool checkValid(Coor);
+
+    void placeShip(Coor, bool, int);
 };
 #endif

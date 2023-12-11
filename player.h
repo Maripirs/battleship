@@ -27,7 +27,9 @@ class Player {
     Arr<Ship>& getShips();
 
     virtual Coor& chooseCoor() = 0;
-    Ship findHitShip();
-    bool checLost();
+    Ship findHitShip(Coor);
+    bool checkLost();
+    bool isGuessed(Coor);
+    friend ostream& operator<<(ostream&, const Player&);
 };
 #endif

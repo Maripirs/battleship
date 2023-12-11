@@ -25,5 +25,6 @@ class Coor {
 
     bool operator==(const Coor&);
     Coor& operator=(const Coor&);
+    friend ostream& operator<<(ostream&, const Coor&);
 };
 #endif

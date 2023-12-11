@@ -27,8 +27,15 @@ void Ship::setName(string n) { name = n; }
 void Ship::setHits(int h) { hits = h; }
 void Ship::setCoors(Arr<Coor>& c) { coors = c; }
 
-bool Ship::isHit(Coor) { cout << "Is Hit not implemented" << endl; }
-bool Ship::isDead() { cout << "Is Dead not implemented" << endl; }
+bool Ship::isHit(Coor c) {
+    for (int i = 0; i < size; i++) {
+        if (coors.getAtIndex(i) == c) {
+            return true;
+        }
+    }
+    return false;
+}
+bool Ship::isDead() { return size == hits; }
 
 Ship& Ship::operator=(const Ship& rhs) {
     size = rhs.size;

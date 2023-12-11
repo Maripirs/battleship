@@ -9,24 +9,39 @@
 
 // Need to fix includes and makefile
 int main() {
-    Arr<Coor> newArr;
-    cout << newArr.getAtIndex(0).getX() << endl;
-    Coor newCoor(1, 1, false, 'x');
-    Coor newCoor1(1, 2, false, 'o');
-    newArr.addToEnd(newCoor);
-    newArr.addToEnd(newCoor1);
-    cout << newCoor.getX() << " " << newCoor.getY() << endl;
-    Ship newShip;
-    newShip.setName("ship");
-    newShip.setSize(2);
-    cout << newShip.getName() << " " << newShip.getSize() << endl;
+    bool exitProgram = false;
 
-    Board newBoard;
-    newBoard.displayBoard();
+    while (!exitProgram) {
+        Board board;
+        User userPlayer;
+        Ai aiPlayer;
+        string name;
+        int currPlayer = 0;
+        bool gameOver = false;
+        displayWelcome();
+        cin >> name;
+        userPlayer.setName(name);
+        createBoard(userPlayer);
+        createBoard(aiPlayer);
 
-    Ai newAi;
-    cout << newAi.getName() << endl;
-    User newUser;
-    cout << newUser.getName() << endl;
+
+        while (!gameOver) {
+            currPlayer = (currPlayer == 1 ? 0 : 1);
+            switch (currPlayer) {
+                case 1:
+                    displayBoards(userPlayer, aiPlayer);
+                    gameOver = takeTurn(userPlayer, aiPlayer);
+                    break;
+                case 0:
+                    displayBoards(aiPlayer, userPlayer);
+                    gameOver = takeTurn(aiPlayer, userPlayer);
+                    break;
+            }
+        }
+        endGameMessage();
+        exitProgram = getValidInput(1, 2);
+        exitProgram = true;
+    }
+    finalMessage();
     return 0;
 }

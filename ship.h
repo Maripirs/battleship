@@ -27,5 +27,6 @@ class Ship {
     bool isDead();
 
     Ship& operator=(const Ship&);
+    friend ostream& operator <<(ostream&, const Ship&);
 };
 #endif

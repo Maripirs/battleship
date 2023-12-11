@@ -1,5 +1,6 @@
 #ifndef AI_H
 #define AI_H
+#include <stdlib.h>
 #include "player.h"
 class Ai : public Player {
    public:

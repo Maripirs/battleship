@@ -3,7 +3,7 @@ Coor::Coor() {
     x = -1;
     y = -1;
     isShip = false;
-    currDisplay = '-';
+    currDisplay = ' ';
 }
 Coor::Coor(int newX, int newY, bool s, char c) {
     x = newX;
