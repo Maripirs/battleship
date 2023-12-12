@@ -71,20 +71,8 @@ void Board::placeShip(Coor s, bool h, int c) {
         if (isHuman) {
             boardArr.getAtIndex(index).setCurrDisplay('#');
         } else {
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            boardArr.getAtIndex(index).setCurrDisplay('&');
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
-            //REMOVE BEFORE TURNING IN
+            // for testing
+            // boardArr.getAtIndex(index).setCurrDisplay('&');
         }
         if (h) {
             index++;

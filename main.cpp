@@ -1,7 +1,9 @@
-//Authors: Maripi Bartosch, Semra Ozdemir
-//Date Completed: 12/11/2023
-//Purpose: PA5 - Battleship
-//Description: This program emulates a single player version of the classic game of Battleship in which the user attempts to sink all the ships of an AI opponent before the AI destroys the user's fleet.
+// Authors: Maripi Bartosch, Semra Ozdemir
+// Date Completed: 12/11/2023
+// Purpose: PA5 - Battleship
+// Description: This program emulates a single player version of the classic
+// game of Battleship in which the user attempts to sink all the ships of an AI
+// opponent before the AI destroys the user's fleet.
 
 #include "helpers.h"
 
@@ -14,7 +16,7 @@ int main() {
         User userPlayer;
         Ai aiPlayer;
         string name;
-        int currPlayer = 0;
+        int currPlayer = rand() % 2;
         bool gameOver = false;
         displayWelcome();
         cin >> name;

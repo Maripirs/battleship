@@ -1,6 +1,6 @@
-//Authors: Maripi Bartosch, Semra Ozdemir
-//Purpose: 
-//Description: 
+// Authors: Maripi Bartosch, Semra Ozdemir
+// Purpose:
+// Description:
 
 #ifndef USER_H
 #define USER_H
@@ -10,6 +10,9 @@ class User : public Player {
     User();
     User(string, Board&, Arr<Coor>&, Arr<Ship>&);
     User(const User&);
+    // puprose: Will prompt the user to select a coordinate within range.
+    // input: None
+    // output: Coor. The coordinate selected by the user.
     Coor chooseCoor();
 };
 #endif
