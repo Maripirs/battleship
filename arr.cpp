@@ -96,3 +96,7 @@ Arr<T>& Arr<T>::operator=(const Arr& rhs) {
     }
     return *this;
 }
+template <class T>
+void Arr<T>::operator+(const T& newElement){
+    addToEnd(newElement);
+}

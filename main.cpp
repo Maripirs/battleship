@@ -1,11 +1,9 @@
-// Authors: Maripi Bartosch, Semra Ozdemir
-#include "ai.h"
-#include "arr.h"
-#include "board.h"
-#include "coor.h"
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Date Completed: 12/11/2023
+//Purpose: PA5 - Battleship
+//Description: This program emulates a single player version of the classic game of Battleship in which the user attempts to sink all the ships of an AI opponent before the AI destroys the user's fleet.
+
 #include "helpers.h"
-#include "ship.h"
-#include "user.h"
 
 // Need to fix includes and makefile
 int main() {
@@ -21,26 +19,25 @@ int main() {
         displayWelcome();
         cin >> name;
         userPlayer.setName(name);
-        createBoard(userPlayer);
+        // createBoard(userPlayer);
+        createTestBoard(userPlayer);
         createBoard(aiPlayer);
-
-
+        clearScreen();
+        displayBoards(userPlayer, aiPlayer);
         while (!gameOver) {
             currPlayer = (currPlayer == 1 ? 0 : 1);
             switch (currPlayer) {
                 case 1:
-                    displayBoards(userPlayer, aiPlayer);
+                    // displayBoards(userPlayer, aiPlayer);
                     gameOver = takeTurn(userPlayer, aiPlayer);
                     break;
                 case 0:
-                    displayBoards(aiPlayer, userPlayer);
                     gameOver = takeTurn(aiPlayer, userPlayer);
                     break;
             }
         }
         endGameMessage();
-        exitProgram = getValidInput(1, 2);
-        exitProgram = true;
+        exitProgram = !getYN();
     }
     finalMessage();
     return 0;

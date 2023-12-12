@@ -1,47 +1,36 @@
 #include "helpers.h"
 
+#include "ai.h"
 // ORGANIZE THIS FUNCTION
 void createBoard(Player& pl) {
+    srand(time(NULL));
     Arr<Ship> ships = pl.getShips();
     int currRow, currCol;
     bool human = pl.getBoard().getIsHuman();
+    cout << pl.getBoard();
     for (int i = 0; i < ships.getNum(); i++) {
         bool placed = false;
         Coor startCoor;
         while (!placed) {
             bool horizontal;
-            bool free = false;
-            while (!free) {
-                if (human) {
-                    cout << "Choose top left corner for your "
-                         << ships.getAtIndex(i).getName()
-                         << " - Size: " << ships.getAtIndex(i).getSize();
-                }
-                startCoor = pl.chooseCoor();
-                currCol = startCoor.getX();
-                currRow = startCoor.getY();
-                free = pl.getBoard().checkValid(startCoor);
-            }
+            startCoor = chooseFreeCoor(ships.getAtIndex(i), pl);
+            currCol = startCoor.getX();
+            currRow = startCoor.getY();
             if (human) {
                 cout << "Do you want this ship horizontal?(y/n) ";
                 horizontal = getYN();
             } else {
                 horizontal = rand() % 2;
             }
-            bool success = true;
-            for (int j = 1; j < pl.getShips().getAtIndex(i).getSize(); j++) {
-                horizontal ? currCol++ : currRow++;
-                Coor tempCoor(currCol, currRow, false, ' ');
-                if (!pl.getBoard().checkValid(tempCoor)) {
-                    success = false;
-                    break;
-                }
-            }
+            bool success = shipFits(pl.getShips().getAtIndex(i), pl, horizontal,
+                                    startCoor);
             if (success) {
                 pl.getBoard().placeShip(startCoor, horizontal,
                                         pl.getShips().getAtIndex(i).getSize());
                 Arr<Coor> shipCoors;
                 Coor temp = startCoor;
+                currCol = startCoor.getX();
+                currRow = startCoor.getY();
                 for (int j = 0; j < pl.getShips().getAtIndex(i).getSize();
                      j++) {
                     shipCoors.addToEnd(temp);
@@ -71,56 +60,42 @@ bool getYN() {
 
 bool takeTurn(Player& current, Player& opponent) {
     bool validChoice = false;
+    bool human = current.getBoard().getIsHuman();
     Coor chosenCoor;
     while (!validChoice) {
-        cout << " Choose a Coordinate to attack! " << endl;
-        chosenCoor = current.chooseCoor();
-        if (current.isGuessed(chosenCoor)) {
-            cout << "You've already attacked this space" << endl;
+        if (human) {
+            cout << "Choose a Coordinate to attack! " << endl;
+            chosenCoor = current.chooseCoor();
+            if (current.isGuessed(chosenCoor)) {
+                cout << "You've already attacked this space" << endl;
+            } else {
+                validChoice = true;
+            }
         } else {
-            validChoice = true;
+            chosenCoor = current.chooseCoor();
+            if (!current.isGuessed(chosenCoor)) {
+                validChoice = true;
+            }
         }
     }
-
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    current.getGuessedCoors().addToEnd(chosenCoor);
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
-    // ADD OPERATION OVERLOAD
+    if (human) {
+        displayBoards(current, opponent);
+        clearScreen();
+    }
+    cout << current.getName() << " Targeted: " << idxToLetter(chosenCoor.getY())
+         << chosenCoor.getX() + 1 << ". ";
+    current.getGuessedCoors() + chosenCoor;
     int idx = translateCoor(chosenCoor);
     if (opponent.getBoard().getBoardArr().getAtIndex(idx).getIsShip()) {
         opponent.getBoard().getBoardArr().getAtIndex(idx).setCurrDisplay('X');
         Ship tempShip = opponent.findHitShip(chosenCoor);
         cout << "It's a hit!" << endl;
-        cout << tempShip.getName() << " has been hit " << tempShip.getHits()
-             << "times. It has a total of " << tempShip.getSize() << "spaces"
-             << endl;
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
-        // NOT WORKING AS EXPECTED!
         if (tempShip.isDead()) {
-            cout << tempShip.getName() << "sunk!" << endl;
+            cout << tempShip.getName() << " Sunk!" << endl;
             if (opponent.checkLost()) {
-                cout << "All of the opponent ships have been sunk." << endl;
-                cout << current.getName() << "Wins! Congratulations." << endl;
+                cout << "All of " << opponent.getName()
+                     << " ships have been sunk." << endl;
+                cout << current.getName() << " Wins! Congratulations." << endl;
                 return true;
             }
         }
@@ -128,12 +103,23 @@ bool takeTurn(Player& current, Player& opponent) {
         opponent.getBoard().getBoardArr().getAtIndex(idx).setCurrDisplay('O');
         cout << "It's a miss!" << endl;
     }
+    if (!human) {
+        displayBoards(opponent, current);
+    }
     return false;
 }
 
+char idxToLetter(int idx) {
+    char letter = 'A';
+    for (int i = 0; i < idx; i++) {
+        letter++;
+    }
+    return letter;
+}
 ostream& operator<<(ostream& out, const Ship& a) {
     out << "name: " << a.name << endl;
     out << "size: " << a.size << endl;
+    out << "hits: " << a.hits << endl;
 
     return out;
 }
@@ -142,8 +128,7 @@ ostream& operator<<(ostream& out, const Player& a) {
     return out;
 }
 ostream& operator<<(ostream& out, const Coor& a) {
-    out << "X: " << a.x << endl;
-    out << "Y: " << a.y << endl;
+    out << "(x,y) :(" << a.x << "," << a.y << ")";
     return out;
 }
 ostream& operator<<(ostream& out, Board& a) {
@@ -175,7 +160,7 @@ ostream& operator<<(ostream& out, Board& a) {
 template <typename T>
 ostream& operator<<(ostream& out, const Arr<T>& a) {
     for (int i = 0; i < a.num; i++) {
-        out << a.getAtIndex(i);
+        out << a.getAtIndex(i) << endl;
     }
     return out;
 }
@@ -205,23 +190,22 @@ void endGameMessage() {
 }
 void finalMessage() { cout << "Thanks for playing!" << endl; }
 
-void spacer() { cout << "       "; }
-// UPGRADE
+void spacer() { cout << "         "; }
 void displayBoards(Player& a, Player& b) {
     cout << endl;
-    cout << "    ------------- " << a.getName() << "'s Board ------------    ";
+    cout << "    --------------- Your Board ------------";
     spacer();
-    cout << "    ------------- " << b.getName() << "'s Board ------------    "
-         << endl
-         << endl;
+    cout << "    ------------- Opponent Board ----------    " << endl << endl;
 
     printNumbers();
     spacer();
+    cout << " ";
     printNumbers();
 
     cout << endl << " ";
     printLine();
     spacer();
+
     printLine();
     cout << endl;
     char letter = 'A';
@@ -237,7 +221,7 @@ void displayBoards(Player& a, Player& b) {
                  << " |";
         }
         spacer();
-        cout << "  ";
+        cout << letter << " ";
         for (int j = 0; j < 10; j++) {
             cout << "| "
                  << b.getBoard()
@@ -254,20 +238,60 @@ void displayBoards(Player& a, Player& b) {
         printLine();
         cout << endl;
     }
+}
+void clearScreen() {
+    //
+    cout << "\33[2J\33[H";
+    //
+}
 
-    // for (int i = 0; i < (a.getrows * a.cols); i++) {
-    //     out << "| " << a.getBoardArr().getAtIndex(i).getCurrDisplay() << " ";
-    //     // cout << "|" << i;
-    //     if (i % 10 == 9) {
-    //         out << "|";
-    //         spacer() endl;
-    //         printLine();
-    //         out << endl;
-    //         if (count < 9) {
-    //             out << letter << " ";
-    //             letter++;
-    //             count++;
-    //         }
-    //     }
-    // }
+void createTestBoard(Player& pl) {
+    Coor startCoor(0, 0, false, ' ');
+    bool horizontal = true;
+    int currCol = 0;
+    int currRow = 0;
+    for (int i = 0; i < 5; i++) {
+        pl.getBoard().placeShip(startCoor, horizontal,
+                                pl.getShips().getAtIndex(i).getSize());
+        Arr<Coor> shipCoors;
+        Coor temp = startCoor;
+        currCol = startCoor.getX();
+        currRow = startCoor.getY();
+        for (int j = 0; j < pl.getShips().getAtIndex(i).getSize(); j++) {
+            shipCoors.addToEnd(temp);
+            horizontal ? currCol++ : currRow++;
+            temp = Coor(currCol, currRow, false, ' ');
+        }
+        Ship tempShip(pl.getShips().getAtIndex(i));
+        tempShip.setCoors(shipCoors);
+        pl.getShips().replaceAtIndex(i, tempShip);
+        Coor newCoor(0, i + 1, false, ' ');
+        startCoor = newCoor;
+    }
+}
+Coor chooseFreeCoor(Ship& ship, Player& pl) {
+    while (true) {
+        if (pl.getBoard().getIsHuman()) {
+            cout << "Choose top left corner for your " << ship.getName()
+                 << " - Size: " << ship.getSize();
+        }
+        Coor startCoor = pl.chooseCoor();
+
+        if (pl.getBoard().checkValid(startCoor)) {
+            return startCoor;
+        }
+    }
+}
+
+bool shipFits(Ship& ship, Player& pl, bool horizontal, Coor start) {
+    int currCol = start.getX();
+    int currRow = start.getY();
+    for (int j = 1; j < ship.getSize(); j++) {
+        horizontal ? currCol++ : currRow++;
+        Coor tempCoor(currCol, currRow, false, ' ');
+        if (!pl.getBoard().checkValid(tempCoor)) {
+            return false;
+        }
+    }
+    return true;
 }

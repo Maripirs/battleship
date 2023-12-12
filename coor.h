@@ -1,3 +1,7 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: 
+//Description: 
+
 #ifndef COOR_H
 #define COOR_H
 #include <iostream>

@@ -1,8 +1,12 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: Creating a "Player" class that serves as a virtual base class from which "AI" and "User" inherit
+//Description: The player's name is stored in "name"; "board" consists of an array of 100 Coordinate objects that make up the player's 10x10 board;
+//the player's guessed coordinates are tracked in "guessedCoors"; and the player's five-ship fleet is held in "ships".
+
 #ifndef PLAYER_H
 #define PLAYER_H
-#include "arr.h"  //alreadu in coor
+
 #include "board.h"
-#include "coor.h"  //already in board
 #include "ship.h"
 class Player {
    protected:
@@ -26,7 +30,7 @@ class Player {
     Arr<Coor>& getGuessedCoors();
     Arr<Ship>& getShips();
 
-    virtual Coor& chooseCoor() = 0;
+    virtual Coor chooseCoor() = 0;
     Ship findHitShip(Coor);
     bool checkLost();
     bool isGuessed(Coor);

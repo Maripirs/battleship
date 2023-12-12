@@ -1,6 +1,10 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: 
+//Description: 
+
 #ifndef BOARD_H
 #define BOARD_H
-#include "arr.h"  //Don't think we need it
+#include "arr.h" 
 #include "coor.h"
 class Board {
     Arr<Coor> boardArr;

@@ -1,3 +1,7 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: 
+//Description: 
+
 #ifndef AI_H
 #define AI_H
 #include <stdlib.h>
@@ -7,6 +11,6 @@ class Ai : public Player {
     Ai();
     Ai(string, Board&, Arr<Coor>&, Arr<Ship>&);
     Ai(const Ai&);
-    Coor& chooseCoor();
+    Coor chooseCoor();
 };
 #endif

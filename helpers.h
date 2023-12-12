@@ -1,4 +1,6 @@
-#include "player.h"
+#include "ai.h"
+#include "user.h"
+
 void createBoard(Player&);
 
 bool takeTurn(Player&, Player&);
@@ -27,4 +29,11 @@ int translateCoor(Coor);
 
 void printNumbers();
 void displayBoards(Player&, Player&);
-// void createShips(Player& p);
+void clearScreen();
+
+void createTestBoard(Player& pl);
+
+char idxToLetter(int);
+
+Coor chooseFreeCoor(Ship&, Player&);
+bool shipFits(Ship&, Player&, bool, Coor);

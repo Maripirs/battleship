@@ -29,7 +29,9 @@ void Ship::setCoors(Arr<Coor>& c) { coors = c; }
 
 bool Ship::isHit(Coor c) {
     for (int i = 0; i < size; i++) {
+
         if (coors.getAtIndex(i) == c) {
+
             return true;
         }
     }

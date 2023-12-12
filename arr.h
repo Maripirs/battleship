@@ -1,3 +1,7 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: 
+//Description: 
+
 #ifndef ARR_H
 #define ARR_H
 #include <iostream>
@@ -25,6 +29,7 @@ class Arr {
     ~Arr();
     Arr& operator=(const Arr&);
     friend ostream& operator<<(ostream&, const Arr&);
+    void operator+(const T&);
 };
 #include "arr.cpp"
 #endif

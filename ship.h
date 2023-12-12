@@ -1,3 +1,7 @@
+//Authors: Maripi Bartosch, Semra Ozdemir
+//Purpose: 
+//Description: 
+
 #ifndef SHIP_H
 #define SHIP_H
 #include "arr.h"

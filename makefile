@@ -2,7 +2,7 @@ battleship: main.o helpers.o player.o ai.o user.o ship.o board.o coor.o arr.h ar
 	g++ -o battleship main.o helpers.o player.o ai.o user.o ship.o board.o coor.o
 main.o: main.cpp 
 	g++ -c main.cpp
-helpers.o: helpers.cpp helpers.h arr.h player.h
+helpers.o: helpers.cpp helpers.h 
 	g++ -c helpers.cpp
 player.o: player.cpp 
 	g++ -c player.cpp
